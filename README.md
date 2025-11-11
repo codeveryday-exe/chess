@@ -1,0 +1,28 @@
+# TASKS
+
+- [x] Create empty board
+  - [x] Size width max 1056px, height same as width
+  - [x] Horizontally center
+- [x] Render initial board state (Standard chess)
+  - [x] Use SVG for pieces (https://commons.wikimedia.org/wiki/Category:SVG_chess_pieces)
+
+- [] create board context (wraps the whole app)
+  - [] there will be board set inside of it (state)
+  - [] also chess.js instance(chess = new Chess())
+  - [] wrapper functions:
+    1. function makeMove (args. move etc.) => chess.move(), setBoard(chess.board())
+    2. function moves => chess.moves(args. piece or square)
+
+- [] Use chess.js (https://jhlywa.github.io/chess.js/#moves-piece-piece-square-square-verbose--false--)
+  - [] Turns, black can move on his turn
+  - [] Validate moves, render dot on valid squares
+  - [] If in check, show an indicator
+  - [] If game ends, show result
+  - [] If promoting, display a piece selector
+
+- [] Add timer and time-control selector (hold preference in local storage)
+- [] Add multiplayer peer2peer
+
+---
+
+# QUESTIONS

@@ -1,0 +1,16 @@
+.board {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  aspect-ratio: 1;
+  max-width: 1056px;
+  max-height: 1056px;
+  margin: 20px auto;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+@media (max-width: 400px) {
+  .board {
+    border-radius: 5px;
+  }
+}
