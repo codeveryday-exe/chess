@@ -6,10 +6,10 @@
 - [x] Render initial board state (Standard chess)
   - [x] Use SVG for pieces (https://commons.wikimedia.org/wiki/Category:SVG_chess_pieces)
 
-- [] create board context (wraps the whole app)
-  - [] there will be board set inside of it (state)
-  - [] also chess.js instance(chess = new Chess())
-  - [] wrapper functions:
+- [x] create board context (wraps the whole app)
+  - [x] there will be board set inside of it (state)
+  - [x] also chess.js instance(chess = new Chess())
+  - [x] wrapper functions:
     1. function makeMove (args. move etc.) => chess.move(), setBoard(chess.board())
     2. function moves => chess.moves(args. piece or square)
 

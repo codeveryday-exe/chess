@@ -1,4 +1,14 @@
-import styles from './Piece.module.css';
+import {
+  BISHOP,
+  KING,
+  KNIGHT,
+  PAWN,
+  QUEEN,
+  ROOK,
+  WHITE,
+  type Color,
+  type PieceSymbol /* type Square */,
+} from 'chess.js';
 import { Bishop } from './Pieces/Bishop';
 import { King } from './Pieces/King';
 import { Knight } from './Pieces/Knight';
@@ -7,60 +17,33 @@ import { Queen } from './Pieces/Queen';
 import { Rook } from './Pieces/Rook';
 
 interface Props {
-  letter?: string;
+  // square: Square;
+  type: PieceSymbol | undefined;
+  color: Color | undefined;
 }
 
-export function Piece({ letter }: Props) {
-  if (letter === 'p') {
-    return <Pawn side="black" />;
-  }
+export function Piece({ /* square, */ type, color }: Props) {
+  switch (type) {
+    case PAWN:
+      return <Pawn side={color === WHITE ? 'white' : 'black'} />;
 
-  if (letter === 'P') {
-    return <Pawn side="white" />;
-  }
+    case ROOK:
+      return <Rook side={color === WHITE ? 'white' : 'black'} />;
 
-  if (letter === 'r') {
-    return <Rook side="black" />;
-  }
+    case KNIGHT:
+      return <Knight side={color === WHITE ? 'white' : 'black'} />;
 
-  if (letter === 'R') {
-    return <Rook side="white" />;
-  }
+    case BISHOP:
+      return <Bishop side={color === WHITE ? 'white' : 'black'} />;
 
-  if (letter === 'n') {
-    return <Knight side="black" />;
-  }
+    case QUEEN:
+      return <Queen side={color === WHITE ? 'white' : 'black'} />;
 
-  if (letter === 'N') {
-    return <Knight side="white" />;
-  }
+    case KING:
+      return <King side={color === WHITE ? 'white' : 'black'} />;
 
-  if (letter === 'b') {
-    return <Bishop side="black" />;
+    default:
+      return type;
   }
-
-  if (letter === 'B') {
-    return <Bishop side="white" />;
-  }
-
-  if (letter === 'q') {
-    return <Queen side="black" />;
-  }
-
-  if (letter === 'Q') {
-    return <Queen side="white" />;
-  }
-
-  if (letter === 'k') {
-    return <King side="black" />;
-  }
-
-  if (letter === 'K') {
-    return <King side="white" />;
-  }
-
-  return letter;
 }
-// USE SWITCH-CASE NOT IF
-// USE TYPES FROM CHESS.JS, NOT LETTERS
-// USE GIT
+// ADD BOARD CONTEXT
