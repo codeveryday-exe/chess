@@ -1,26 +1,52 @@
 import { Square } from '../Square';
 import styles from './Board.module.css';
 import { useBoard } from '../contexts/BoardContext';
+import { BLACK, WHITE } from 'chess.js';
+import { Piece } from './Piece';
+import { useMemo, useState } from 'react';
+import type { BoardPiece } from '../types';
+import { Dot } from './Dot';
+
+const boardNotation = [
+  ['a8', 'b8', 'c8', 'd8', 'e8', 'f8', 'g8', 'h8'],
+  ['a7', 'b7', 'c7', 'd7', 'e7', 'f7', 'g7', 'h7'],
+  ['a6', 'b6', 'c6', 'd6', 'e6', 'f6', 'g6', 'h6'],
+  ['a5', 'b5', 'c5', 'd5', 'e5', 'f5', 'g5', 'h5'],
+  ['a4', 'b4', 'c4', 'd4', 'e4', 'f4', 'g4', 'h4'],
+  ['a3', 'b3', 'c3', 'd3', 'e3', 'f3', 'g3', 'h3'],
+  ['a2', 'b2', 'c2', 'd2', 'e2', 'f2', 'g2', 'h2'],
+  ['a1', 'b1', 'c1', 'd1', 'e1', 'f1', 'g1', 'h1'],
+];
 
 export function Board() {
-  const { board /* makeMove */ } = useBoard();
+  const { board, getMoves, makeMove } = useBoard();
+  const [selectedPiece, setSelectedPiece] = useState<BoardPiece>();
 
-  console.log(board);
+  const possibleMoves = useMemo(() => {
+    return selectedPiece ? getMoves(selectedPiece.square) : [];
+  }, [getMoves, selectedPiece]);
 
   return (
-    <>
-      <div className={styles.board}>
-        {board.map((row, columnIndex) =>
-          row.map((piece, rowIndex) => (
-            <Square
-              key={rowIndex}
-              type={piece?.type}
-              squareColor={(rowIndex + (columnIndex % 2)) % 2 === 0 ? 'white' : 'black'}
-              pieceColor={piece?.color}
-            />
-          )),
-        )}
-      </div>
-    </>
+    <div className={styles.board}>
+      {board.map((row, columnIndex) =>
+        row.map((piece, rowIndex) => {
+          const matchingMove = possibleMoves.find((move) => move.to === boardNotation[columnIndex][rowIndex]);
+
+          return (
+            <Square key={rowIndex} squareColor={(rowIndex + (columnIndex % 2)) % 2 === 0 ? WHITE : BLACK}>
+              {piece && <Piece piece={piece} onSelectedPiece={() => setSelectedPiece(piece)} />}
+              {matchingMove && (
+                <Dot
+                  onMove={() => {
+                    makeMove(matchingMove);
+                    setSelectedPiece(undefined);
+                  }}
+                />
+              )}
+            </Square>
+          );
+        }),
+      )}
+    </div>
   );
 }

@@ -13,9 +13,9 @@
     1. function makeMove (args. move etc.) => chess.move(), setBoard(chess.board())
     2. function moves => chess.moves(args. piece or square)
 
-- [] Use chess.js (https://jhlywa.github.io/chess.js/#moves-piece-piece-square-square-verbose--false--)
-  - [] Turns, black can move on his turn
-  - [] Validate moves, render dot on valid squares
+- [x] Use chess.js (https://jhlywa.github.io/chess.js/#moves-piece-piece-square-square-verbose--false--)
+  - [x] Turns, black can move on his turn
+  - [x] Validate moves, render dot on valid squares
   - [] If in check, show an indicator
   - [] If game ends, show result
   - [] If promoting, display a piece selector

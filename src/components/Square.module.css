@@ -5,6 +5,12 @@
   position: relative;
   color: black;
 
+  button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
   svg {
     position: absolute;
     width: 100%;

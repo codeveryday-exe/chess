@@ -1,19 +1,12 @@
-import type { Color, PieceSymbol } from 'chess.js';
-import { Piece } from './components/Piece';
+import { WHITE, type Color } from 'chess.js';
 import styles from './components/Square.module.css';
+import type { ReactNode } from 'react';
 
 interface Props {
-  squareColor: string;
-  pieceType?: string;
-  columnIndex?: number;
-  type?: PieceSymbol;
-  pieceColor?: Color;
+  squareColor: Color;
+  children: ReactNode;
 }
 
-export function Square({ squareColor, type: letter, pieceColor }: Props) {
-  return (
-    <div className={`${styles.square} ${styles[squareColor]}`}>
-      {letter && <Piece type={letter} color={pieceColor} />}
-    </div>
-  );
+export function Square({ squareColor, children }: Props) {
+  return <div className={`${styles.square} ${squareColor === WHITE ? styles.white : styles.black}`}>{children}</div>;
 }

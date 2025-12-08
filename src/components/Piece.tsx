@@ -1,49 +1,45 @@
-import {
-  BISHOP,
-  KING,
-  KNIGHT,
-  PAWN,
-  QUEEN,
-  ROOK,
-  WHITE,
-  type Color,
-  type PieceSymbol /* type Square */,
-} from 'chess.js';
+import { BISHOP, KING, KNIGHT, PAWN, QUEEN, ROOK, WHITE } from 'chess.js';
 import { Bishop } from './Pieces/Bishop';
 import { King } from './Pieces/King';
 import { Knight } from './Pieces/Knight';
 import { Pawn } from './Pieces/Pawn';
 import { Queen } from './Pieces/Queen';
 import { Rook } from './Pieces/Rook';
+import type { BoardPiece } from '../types';
 
 interface Props {
-  // square: Square;
-  type: PieceSymbol | undefined;
-  color: Color | undefined;
+  piece: BoardPiece;
+  onSelectedPiece: VoidFunction;
 }
 
-export function Piece({ /* square, */ type, color }: Props) {
-  switch (type) {
+function PieceIcon({ piece }: { piece: BoardPiece }) {
+  switch (piece.type) {
     case PAWN:
-      return <Pawn side={color === WHITE ? 'white' : 'black'} />;
-
+      return <Pawn side={piece.color === WHITE ? 'white' : 'black'} />;
     case ROOK:
-      return <Rook side={color === WHITE ? 'white' : 'black'} />;
-
+      return <Rook side={piece.color === WHITE ? 'white' : 'black'} />;
     case KNIGHT:
-      return <Knight side={color === WHITE ? 'white' : 'black'} />;
-
+      return <Knight side={piece.color === WHITE ? 'white' : 'black'} />;
     case BISHOP:
-      return <Bishop side={color === WHITE ? 'white' : 'black'} />;
-
+      return <Bishop side={piece.color === WHITE ? 'white' : 'black'} />;
     case QUEEN:
-      return <Queen side={color === WHITE ? 'white' : 'black'} />;
-
+      return <Queen side={piece.color === WHITE ? 'white' : 'black'} />;
     case KING:
-      return <King side={color === WHITE ? 'white' : 'black'} />;
-
+      return <King side={piece.color === WHITE ? 'white' : 'black'} />;
     default:
-      return type;
+      throw new Error('Piece not found');
   }
 }
-// ADD BOARD CONTEXT
+
+export function Piece({ piece, onSelectedPiece }: Props) {
+  return (
+    <button
+      onClick={() => {
+        onSelectedPiece();
+      }}
+      type="button"
+    >
+      <PieceIcon piece={piece} />
+    </button>
+  );
+}
