@@ -1,7 +1,7 @@
-import { Square } from '../Square';
+import { Square } from './Square';
 import styles from './Board.module.css';
 import { useBoard } from '../contexts/BoardContext';
-import { BLACK, WHITE } from 'chess.js';
+import { BLACK, KING, WHITE } from 'chess.js';
 import { Piece } from './Piece';
 import { useMemo, useState } from 'react';
 import type { BoardPiece } from '../types';
@@ -19,7 +19,7 @@ const boardNotation = [
 ];
 
 export function Board() {
-  const { board, getMoves, makeMove } = useBoard();
+  const { board, inCheck, turn, getMoves, makeMove } = useBoard();
   const [selectedPiece, setSelectedPiece] = useState<BoardPiece>();
 
   const possibleMoves = useMemo(() => {
@@ -33,7 +33,11 @@ export function Board() {
           const matchingMove = possibleMoves.find((move) => move.to === boardNotation[columnIndex][rowIndex]);
 
           return (
-            <Square key={rowIndex} squareColor={(rowIndex + (columnIndex % 2)) % 2 === 0 ? WHITE : BLACK}>
+            <Square
+              key={rowIndex}
+              isCheck={inCheck && piece?.type === KING && piece.color === turn}
+              squareColor={(rowIndex + (columnIndex % 2)) % 2 === 0 ? WHITE : BLACK}
+            >
               {piece && <Piece piece={piece} onSelectedPiece={() => setSelectedPiece(piece)} />}
               {matchingMove && (
                 <Dot

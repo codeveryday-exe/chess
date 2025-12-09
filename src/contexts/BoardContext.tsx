@@ -1,4 +1,4 @@
-import { Chess, Move, type Square } from 'chess.js';
+import { Chess, Move, type Color, type Square } from 'chess.js';
 import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from 'react';
 import type { BoardPiece } from '../types';
 
@@ -7,6 +7,11 @@ interface BoardContextValues {
   makeMove: (...args: Parameters<(typeof Chess)['prototype']['move']>) => void;
   getMoves: (square: Square) => Move[];
   inCheck: boolean;
+  isCheckmate: boolean;
+  isDraw: boolean;
+  isStalemate: boolean;
+  turn: Color;
+  reset: () => void;
 }
 
 const BoardContext = createContext<BoardContextValues | null>(null);
@@ -27,13 +32,29 @@ export function BoardContextProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const [board, setBoard] = useState(() => chess.board());
-
   const [inCheck, setInCheck] = useState(() => chess.inCheck());
+  const [isCheckmate, setIsCheckmate] = useState(() => chess.isCheckmate());
+  const [isDraw, setIsDraw] = useState(() => chess.isDraw());
+  const [isStalemate, setIsStalemate] = useState(() => chess.isStalemate());
+  const [turn, setTurn] = useState(() => chess.turn());
+
+  function syncState() {
+    setBoard(chess.board());
+    setInCheck(chess.inCheck());
+    setIsDraw(chess.isDraw());
+    setIsStalemate(chess.isStalemate());
+    setIsCheckmate(chess.isCheckmate());
+    setTurn(chess.turn());
+  }
+
+  function reset() {
+    chess.reset();
+    syncState();
+  }
 
   function makeMove(...args: Parameters<typeof chess.move>) {
     chess.move(...args);
-    setBoard(chess.board());
-    setInCheck(chess.inCheck());
+    syncState();
   }
 
   const getMoves = useCallback(
@@ -43,5 +64,9 @@ export function BoardContextProvider({ children }: { children: ReactNode }) {
     [chess],
   );
 
-  return <BoardContext value={{ board, inCheck, makeMove, getMoves }}>{children}</BoardContext>;
+  return (
+    <BoardContext value={{ board, inCheck, isCheckmate, isDraw, isStalemate, turn, reset, makeMove, getMoves }}>
+      {children}
+    </BoardContext>
+  );
 }

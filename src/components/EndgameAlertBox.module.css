@@ -1,0 +1,29 @@
+.box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 600px;
+  background-color: #22201b;
+  padding: 40px 100px;
+  border-radius: 20px;
+}
+
+.text {
+  font-weight: bold;
+}
+
+.restartBtn {
+  background-color: #161512;
+  padding: 5px 8px;
+  border-radius: 5px;
+
+  &:hover {
+    background-color: #0e0c0b;
+  }
+
+  &:active {
+    background-color: #000000;
+  }
+}
