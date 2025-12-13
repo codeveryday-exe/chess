@@ -3,8 +3,7 @@ import styles from './Board.module.css';
 import { useBoard } from '../contexts/BoardContext';
 import { BLACK, KING, WHITE } from 'chess.js';
 import { Piece } from './Piece';
-import { useMemo, useState } from 'react';
-import type { BoardPiece } from '../types';
+import { useMemo } from 'react';
 import { Dot } from './Dot';
 
 const boardNotation = [
@@ -19,8 +18,8 @@ const boardNotation = [
 ];
 
 export function Board() {
-  const { board, inCheck, turn, getMoves, makeMove } = useBoard();
-  const [selectedPiece, setSelectedPiece] = useState<BoardPiece>();
+  const { board, inCheck, turn, selectedPiece, setSelectedPiece, setPromotionWaitingMove, getMoves, makeMove } =
+    useBoard();
 
   const possibleMoves = useMemo(() => {
     return selectedPiece ? getMoves(selectedPiece.square) : [];
@@ -42,8 +41,12 @@ export function Board() {
               {matchingMove && (
                 <Dot
                   onMove={() => {
-                    makeMove(matchingMove);
-                    setSelectedPiece(undefined);
+                    if (matchingMove.isPromotion()) {
+                      setPromotionWaitingMove(matchingMove);
+                    } else {
+                      makeMove(matchingMove);
+                      setSelectedPiece(undefined);
+                    }
                   }}
                 />
               )}
@@ -54,3 +57,5 @@ export function Board() {
     </div>
   );
 }
+// if promoting when clicking the dot, stop making a move, instead show a menu which user can select a piece
+// when clicking selected promoting piece, make the move

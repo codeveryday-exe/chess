@@ -12,6 +12,10 @@ interface BoardContextValues {
   isStalemate: boolean;
   turn: Color;
   reset: () => void;
+  promotionWaitingMove: Move | undefined;
+  setPromotionWaitingMove: (move: Move | undefined) => void;
+  selectedPiece: BoardPiece | undefined;
+  setSelectedPiece: (piece: BoardPiece | undefined) => void;
 }
 
 const BoardContext = createContext<BoardContextValues | null>(null);
@@ -37,6 +41,8 @@ export function BoardContextProvider({ children }: { children: ReactNode }) {
   const [isDraw, setIsDraw] = useState(() => chess.isDraw());
   const [isStalemate, setIsStalemate] = useState(() => chess.isStalemate());
   const [turn, setTurn] = useState(() => chess.turn());
+  const [promotionWaitingMove, setPromotionWaitingMove] = useState<Move>();
+  const [selectedPiece, setSelectedPiece] = useState<BoardPiece>();
 
   function syncState() {
     setBoard(chess.board());
@@ -65,7 +71,23 @@ export function BoardContextProvider({ children }: { children: ReactNode }) {
   );
 
   return (
-    <BoardContext value={{ board, inCheck, isCheckmate, isDraw, isStalemate, turn, reset, makeMove, getMoves }}>
+    <BoardContext
+      value={{
+        board,
+        inCheck,
+        isCheckmate,
+        isDraw,
+        isStalemate,
+        promotionWaitingMove,
+        setPromotionWaitingMove,
+        selectedPiece,
+        setSelectedPiece,
+        turn,
+        reset,
+        makeMove,
+        getMoves,
+      }}
+    >
       {children}
     </BoardContext>
   );
