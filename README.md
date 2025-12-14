@@ -1,4 +1,4 @@
-# TASKS
+# Tasks
 
 - [x] Create empty board
   - [x] Size width max 1056px, height same as width
@@ -18,11 +18,7 @@
   - [x] Validate moves, render dot on valid squares
   - [x] If in check, show an indicator
   - [x] If game ends, show result
-  - [] If promoting, display a piece selector
+  - [x] If promoting, display a piece selector
 
 - [] Add timer and time-control selector (hold preference in local storage)
 - [] Add multiplayer peer2peer
-
----
-
-# QUESTIONS

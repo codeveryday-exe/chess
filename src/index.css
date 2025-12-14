@@ -62,7 +62,7 @@ h6 {
   text-wrap: balance;
 }
 
-#app {
+#root {
   isolation: isolate;
 }
 
@@ -82,8 +82,6 @@ button {
 /* ~ css reset ~ */
 
 body {
-  margin: 0 auto;
-  max-width: 1440px;
   font-family: sans-serif;
   background-color: #161512;
   color: white;

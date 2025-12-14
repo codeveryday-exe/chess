@@ -1,0 +1,21 @@
+.box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  max-width: 600px;
+  background-color: #22201b;
+  margin: 0 auto;
+  padding: 40px 100px;
+  border-radius: 20px;
+}
+
+.pieceBtn {
+  max-width: 100px;
+
+  svg {
+    width: 100px;
+    height: 100px;
+    aspect-ratio: 1;
+  }
+}

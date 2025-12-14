@@ -57,5 +57,3 @@ export function Board() {
     </div>
   );
 }
-// if promoting when clicking the dot, stop making a move, instead show a menu which user can select a piece
-// when clicking selected promoting piece, make the move

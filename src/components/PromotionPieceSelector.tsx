@@ -1,28 +1,36 @@
-import { QUEEN } from 'chess.js';
+import { BISHOP, KNIGHT, Move, QUEEN, ROOK } from 'chess.js';
 import { useBoard } from '../contexts/BoardContext';
+import { Queen } from './Pieces/Queen';
+import { Rook } from './Pieces/Rook';
+import { Bishop } from './Pieces/Bishop';
+import { Knight } from './Pieces/Knight';
+import styles from './PromotionPieceSelector.module.css';
 
-export function PromotionPieceSelector() {
-  const { promotionWaitingMove, setPromotionWaitingMove, setSelectedPiece, makeMove } = useBoard();
+export function PromotionPieceSelector({ promotionWaitingMove }: { promotionWaitingMove: Move }) {
+  const { setPromotionWaitingMove, setSelectedPiece, turn, makeMove } = useBoard();
 
-  if (!promotionWaitingMove) {
-    return null;
+  function promote(promotion: string) {
+    makeMove({ from: promotionWaitingMove.from, to: promotionWaitingMove.to, promotion });
+    setSelectedPiece(undefined);
+    setPromotionWaitingMove(undefined);
   }
 
   return (
     <>
-      <button
-        type="button"
-        onClick={() => {
-          makeMove({ from: promotionWaitingMove.from, to: promotionWaitingMove.to, promotion: QUEEN });
-          setSelectedPiece(undefined);
-          setPromotionWaitingMove(undefined);
-        }}
-      >
-        bruhQueen
-      </button>
+      <div className={styles.box}>
+        <button className={styles.pieceBtn} type="button" onClick={() => promote(QUEEN)}>
+          <Queen side={turn === 'w' ? 'white' : 'black'} />
+        </button>
+        <button className={styles.pieceBtn} type="button" onClick={() => promote(ROOK)}>
+          <Rook side={turn === 'w' ? 'white' : 'black'} />
+        </button>
+        <button className={styles.pieceBtn} type="button" onClick={() => promote(BISHOP)}>
+          <Bishop side={turn === 'w' ? 'white' : 'black'} />
+        </button>
+        <button className={styles.pieceBtn} type="button" onClick={() => promote(KNIGHT)}>
+          <Knight side={turn === 'w' ? 'white' : 'black'} />
+        </button>
+      </div>
     </>
   );
 }
-
-// block making moves when waiting for promotion => (tactic: look for HTML inert)
-// show 4 piece in promotionPieceSelector => make it look like a box
