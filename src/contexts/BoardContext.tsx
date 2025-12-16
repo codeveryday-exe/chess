@@ -10,6 +10,8 @@ interface BoardContextValues {
   isCheckmate: boolean;
   isDraw: boolean;
   isStalemate: boolean;
+  isTimeout: boolean;
+  setIsTimeout: (isTimeout: boolean) => void;
   turn: Color;
   reset: () => void;
   promotionWaitingMove: Move | undefined;
@@ -40,6 +42,7 @@ export function BoardContextProvider({ children }: { children: ReactNode }) {
   const [isCheckmate, setIsCheckmate] = useState(() => chess.isCheckmate());
   const [isDraw, setIsDraw] = useState(() => chess.isDraw());
   const [isStalemate, setIsStalemate] = useState(() => chess.isStalemate());
+  const [isTimeout, setIsTimeout] = useState(false);
   const [turn, setTurn] = useState(() => chess.turn());
   const [promotionWaitingMove, setPromotionWaitingMove] = useState<Move>();
   const [selectedPiece, setSelectedPiece] = useState<BoardPiece>();
@@ -50,6 +53,7 @@ export function BoardContextProvider({ children }: { children: ReactNode }) {
     setIsDraw(chess.isDraw());
     setIsStalemate(chess.isStalemate());
     setIsCheckmate(chess.isCheckmate());
+    setIsTimeout(false);
     setTurn(chess.turn());
   }
 
@@ -78,6 +82,8 @@ export function BoardContextProvider({ children }: { children: ReactNode }) {
         isCheckmate,
         isDraw,
         isStalemate,
+        isTimeout,
+        setIsTimeout,
         promotionWaitingMove,
         setPromotionWaitingMove,
         selectedPiece,

@@ -3,7 +3,7 @@ import { useBoard } from '../contexts/BoardContext';
 import styles from './EndgameAlertBox.module.css';
 
 export function EndgameAlertBox() {
-  const { isCheckmate, isDraw, isStalemate, turn, reset } = useBoard();
+  const { isCheckmate, isDraw, isStalemate, isTimeout, turn, reset } = useBoard();
 
   const message = isCheckmate
     ? `Checkmate, ${turn === WHITE ? 'Black' : 'White'} won!`
@@ -11,7 +11,9 @@ export function EndgameAlertBox() {
       ? 'Draw'
       : isStalemate
         ? 'Stalemate'
-        : '';
+        : isTimeout
+          ? `Times Up, ${turn === 'w' ? 'Black' : 'White'} won!`
+          : '';
   return (
     <>
       {message && (
