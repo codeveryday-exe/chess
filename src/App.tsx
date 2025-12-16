@@ -10,7 +10,10 @@ export default function App() {
 
   return (
     <main className={styles.app}>
-      <Clock timeLimit={300} />
+      <div className={styles.clockBox}>
+        <Clock timeLimit={300} />
+        <Clock timeLimit={300} />
+      </div>
       <Board />
       <EndgameAlertBox />
       {promotionWaitingMove && <PromotionPieceSelector promotionWaitingMove={promotionWaitingMove} />}

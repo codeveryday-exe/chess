@@ -2,3 +2,13 @@
   height: 100vh;
   overflow: auto;
 }
+
+.clockBox {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: #22201b;
+  border-radius: 10px;
+}

@@ -21,4 +21,5 @@
   - [x] If promoting, display a piece selector
 
 - [] Add timer and time-control selector (hold preference in local storage)
+- [] Add sound effects
 - [] Add multiplayer peer2peer

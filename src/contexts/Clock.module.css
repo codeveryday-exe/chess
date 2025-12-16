@@ -1,0 +1,17 @@
+.timeBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 116px;
+  background-color: #22201b;
+  border-radius: 10px;
+}
+
+.timeText {
+  font-weight: bold;
+  font-size: 2rem;
+}
+
+.btn {
+  display: none;
+}
