@@ -1,7 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import styles from './Clock.module.css';
+import { useBoard } from './BoardContext';
 
-export function Clock({ timeLimit }: { timeLimit: number }) {
+export function Clock({ timeLimit, color }: { timeLimit: number; color: 'w' | 'b' }) {
+  const { turn } = useBoard();
+
   // for UI
   const [timeLeft, setTimeLeft] = useState(timeLimit);
   // for logic
@@ -9,6 +12,12 @@ export function Clock({ timeLimit }: { timeLimit: number }) {
   const [isPaused, setIsPaused] = useState(false);
 
   useEffect(() => {
+    if (turn !== color || timeLeft === 0) {
+      setIsPaused(true);
+    } else {
+      setIsPaused(false);
+    }
+
     if (isPaused) {
       return;
     }
@@ -29,7 +38,7 @@ export function Clock({ timeLimit }: { timeLimit: number }) {
       msLeftRef.current = msLeft - timeSpent;
       clearInterval(intervalId);
     };
-  }, [timeLimit, isPaused]);
+  }, [timeLimit, isPaused, turn, color, timeLeft]);
 
   let seconds = timeLeft;
   const hours = Math.floor(seconds / 3600);
@@ -45,14 +54,10 @@ export function Clock({ timeLimit }: { timeLimit: number }) {
 
   return (
     <div className={styles.timeBox}>
+      <p className={styles.timeSide}>{color === 'w' ? 'White' : 'Black'}</p>
       <p className={styles.timeText}>{time}</p>
-      <button className={styles.btn} onClick={() => setIsPaused((pause) => !pause)}>
-        {isPaused ? 'resume' : 'pause'}
-      </button>
     </div>
   );
 }
 
-// time should tick on turn
 // end game when clock runs out
-// commit each task when finished

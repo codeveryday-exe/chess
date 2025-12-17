@@ -8,7 +8,8 @@
   justify-content: space-around;
   align-items: center;
   max-width: 600px;
-  margin: 0 auto;
+  margin: 10px auto;
+  padding: 10px 0;
   background-color: #22201b;
   border-radius: 10px;
 }
