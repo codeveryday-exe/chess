@@ -1,10 +1,13 @@
 import { Chess, Move, type Color, type Square } from 'chess.js';
 import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from 'react';
 import type { BoardPiece } from '../types';
+import { useSound } from '../components/hooks/useSound';
+import moveSrc from '../assets/move.mp3';
+import captureSrc from '../assets/capture.mp3';
 
 interface BoardContextValues {
   board: (BoardPiece | null)[][];
-  makeMove: (...args: Parameters<(typeof Chess)['prototype']['move']>) => void;
+  makeMove: (move: Move) => void;
   getMoves: (square: Square) => Move[];
   inCheck: boolean;
   isCheckmate: boolean;
@@ -50,6 +53,8 @@ export function BoardContextProvider({ children }: { children: ReactNode }) {
   const [selectedPiece, setSelectedPiece] = useState<BoardPiece>();
   const [selectedTime, setSelectedTime] = useState<number>();
 
+  const [moveSound] = useSound(moveSrc);
+  const [captureSound] = useSound(captureSrc);
 
   function syncState() {
     setBoard(chess.board());
@@ -69,8 +74,13 @@ export function BoardContextProvider({ children }: { children: ReactNode }) {
     setPromotionWaitingMove(undefined);
   }
 
-  function makeMove(...args: Parameters<typeof chess.move>) {
-    chess.move(...args);
+  function makeMove(move: Move) {
+    if (move.isCapture()) {
+      captureSound();
+    } else {
+      moveSound();
+    }
+    chess.move(move);
     syncState();
   }
 

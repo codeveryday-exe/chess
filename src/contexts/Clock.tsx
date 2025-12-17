@@ -1,23 +1,18 @@
 import { useEffect, useRef, useState } from 'react';
 import styles from './Clock.module.css';
 import { useBoard } from './BoardContext';
+import { WHITE } from 'chess.js';
 
 export function Clock({ timeLimit, color }: { timeLimit: number; color: 'w' | 'b' }) {
-  const { turn, setIsTimeout, isCheckmate } = useBoard();
+  const { turn, isTimeout, setIsTimeout, isCheckmate, isDraw, isStalemate } = useBoard();
 
   // for UI
   const [timeLeft, setTimeLeft] = useState(timeLimit);
   // for logic
   const msLeftRef = useRef(timeLeft * 1000);
-  const [isPaused, setIsPaused] = useState(false);
+  const isPaused = turn !== color || isTimeout || isCheckmate || isDraw || isStalemate;
 
   useEffect(() => {
-    if (turn !== color || timeLeft === 0 || isCheckmate) {
-      setIsPaused(true);
-    } else {
-      setIsPaused(false);
-    }
-
     if (isPaused) {
       return;
     }
@@ -28,8 +23,12 @@ export function Clock({ timeLimit, color }: { timeLimit: number; color: 'w' | 'b
     const intervalId = setInterval(() => {
       // e.g. 1min tick
       const timeSpent = Date.now() - startTime; // 1min -> 2min -> 3min |> 1min -> 2min
-      setTimeLeft(Math.floor((msLeft - timeSpent) / 1000)); // for UI
+      setTimeLeft(Math.ceil((msLeft - timeSpent) / 1000)); // for UI
       msLeftRef.current = msLeft - timeSpent; // 29min -> 28min -> 27min |> 26min -> 25min
+      if (msLeftRef.current <= 0) {
+        setIsTimeout(true);
+        clearInterval(intervalId);
+      }
     }, 0);
 
     return () => {
@@ -38,11 +37,7 @@ export function Clock({ timeLimit, color }: { timeLimit: number; color: 'w' | 'b
       msLeftRef.current = msLeft - timeSpent;
       clearInterval(intervalId);
     };
-  }, [timeLimit, isPaused, turn, color, timeLeft]);
-
-  if (timeLeft === 0) {
-    setIsTimeout(true);
-  }
+  }, [isPaused, setIsTimeout]);
 
   let seconds = timeLeft;
   const hours = Math.floor(seconds / 3600);
@@ -58,7 +53,7 @@ export function Clock({ timeLimit, color }: { timeLimit: number; color: 'w' | 'b
 
   return (
     <div className={styles.timeBox}>
-      <p className={styles.timeSide}>{color === 'w' ? 'White' : 'Black'}</p>
+      <p className={styles.timeSide}>{color === WHITE ? 'White' : 'Black'}</p>
       <p className={styles.timeText}>{time}</p>
     </div>
   );

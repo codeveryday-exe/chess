@@ -5,7 +5,6 @@ import { BLACK, KING, WHITE } from 'chess.js';
 import { Piece } from './Piece';
 import { useMemo } from 'react';
 import { Dot } from './Dot';
-import { useSound } from './hooks/useSound';
 
 const boardNotation = [
   ['a8', 'b8', 'c8', 'd8', 'e8', 'f8', 'g8', 'h8'],
@@ -19,18 +18,25 @@ const boardNotation = [
 ];
 
 export function Board() {
-  const { board, inCheck, turn, selectedPiece, setSelectedPiece, setPromotionWaitingMove, getMoves, makeMove } =
-    useBoard();
+  const {
+    board,
+    inCheck,
+    turn,
+    selectedPiece,
+    setSelectedPiece,
+    promotionWaitingMove,
+    setPromotionWaitingMove,
+    selectedTime,
+    getMoves,
+    makeMove,
+  } = useBoard();
 
   const possibleMoves = useMemo(() => {
     return selectedPiece ? getMoves(selectedPiece.square) : [];
   }, [getMoves, selectedPiece]);
 
-  const [moveSound] = useSound('src/assets/move.mp3');
-  const [captureSound] = useSound('src/assets/capture.mp3');
-
   return (
-    <div className={styles.board}>
+    <div className={styles.board} inert={promotionWaitingMove !== undefined || selectedTime === undefined}>
       {board.map((row, columnIndex) =>
         row.map((piece, rowIndex) => {
           const matchingMove = possibleMoves.find((move) => move.to === boardNotation[columnIndex][rowIndex]);
@@ -49,12 +55,6 @@ export function Board() {
                       setPromotionWaitingMove(matchingMove);
                     } else {
                       makeMove(matchingMove);
-
-                      if (matchingMove.isCapture()) {
-                        captureSound();
-                      } else {
-                        moveSound();
-                      }
                       setSelectedPiece(undefined);
                     }
                   }}
