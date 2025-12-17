@@ -63,5 +63,3 @@ export function Clock({ timeLimit, color }: { timeLimit: number; color: 'w' | 'b
     </div>
   );
 }
-
-// end game when clock runs out

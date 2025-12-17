@@ -5,6 +5,7 @@ import { BLACK, KING, WHITE } from 'chess.js';
 import { Piece } from './Piece';
 import { useMemo } from 'react';
 import { Dot } from './Dot';
+import { useSound } from './hooks/useSound';
 
 const boardNotation = [
   ['a8', 'b8', 'c8', 'd8', 'e8', 'f8', 'g8', 'h8'],
@@ -24,6 +25,9 @@ export function Board() {
   const possibleMoves = useMemo(() => {
     return selectedPiece ? getMoves(selectedPiece.square) : [];
   }, [getMoves, selectedPiece]);
+
+  const [moveSound] = useSound('src/assets/move.mp3');
+  const [captureSound] = useSound('src/assets/capture.mp3');
 
   return (
     <div className={styles.board}>
@@ -45,6 +49,12 @@ export function Board() {
                       setPromotionWaitingMove(matchingMove);
                     } else {
                       makeMove(matchingMove);
+
+                      if (matchingMove.isCapture()) {
+                        captureSound();
+                      } else {
+                        moveSound();
+                      }
                       setSelectedPiece(undefined);
                     }
                   }}

@@ -11,8 +11,8 @@ export default function App() {
   return (
     <main className={styles.app}>
       <div className={styles.clockBox}>
-        <Clock timeLimit={3} color={'w'} />
-        <Clock timeLimit={3} color={'b'} />
+        <Clock timeLimit={300} color={'w'} />
+        <Clock timeLimit={300} color={'b'} />
       </div>
       <Board />
       <EndgameAlertBox />
