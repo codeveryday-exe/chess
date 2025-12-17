@@ -3,7 +3,7 @@ import styles from './Clock.module.css';
 import { useBoard } from './BoardContext';
 
 export function Clock({ timeLimit, color }: { timeLimit: number; color: 'w' | 'b' }) {
-  const { turn, setIsTimeout } = useBoard();
+  const { turn, setIsTimeout, isCheckmate } = useBoard();
 
   // for UI
   const [timeLeft, setTimeLeft] = useState(timeLimit);
@@ -12,7 +12,7 @@ export function Clock({ timeLimit, color }: { timeLimit: number; color: 'w' | 'b
   const [isPaused, setIsPaused] = useState(false);
 
   useEffect(() => {
-    if (turn !== color || timeLeft === 0) {
+    if (turn !== color || timeLeft === 0 || isCheckmate) {
       setIsPaused(true);
     } else {
       setIsPaused(false);
