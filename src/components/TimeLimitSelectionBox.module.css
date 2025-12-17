@@ -1,0 +1,71 @@
+.box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 500px;
+  gap: 16px;
+  background-color: #22201b;
+  border-radius: 10px;
+  margin: 10px auto;
+  padding: 16px 24px;
+}
+
+.infoText {
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.timeSelectionBox {
+  display: flex;
+  justify-content: space-evenly;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.timeSelectionBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  max-width: 124px;
+  padding: 8px 16px;
+  border-radius: 5px;
+  background-color: #161512;
+
+  &:hover {
+    background-color: #0e0c0b;
+  }
+
+  p {
+    font-size: 1.6rem;
+    color: #b9b9b9;
+  }
+}
+
+.customTimeBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.input {
+  padding: 3px 5px;
+  background-color: black;
+  color: white;
+  border: 1px solid black;
+  border-radius: 3px;
+}
+
+.customTimeBtn {
+  padding: 5px 8px;
+  border-radius: 5px;
+  background-color: #161512;
+
+  &:hover {
+    background-color: #0e0c0b;
+  }
+}

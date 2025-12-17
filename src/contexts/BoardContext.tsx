@@ -18,6 +18,8 @@ interface BoardContextValues {
   setPromotionWaitingMove: (move: Move | undefined) => void;
   selectedPiece: BoardPiece | undefined;
   setSelectedPiece: (piece: BoardPiece | undefined) => void;
+  selectedTime: number | undefined;
+  setSelectedTime: (time: number | undefined) => void;
 }
 
 const BoardContext = createContext<BoardContextValues | null>(null);
@@ -46,6 +48,8 @@ export function BoardContextProvider({ children }: { children: ReactNode }) {
   const [turn, setTurn] = useState(() => chess.turn());
   const [promotionWaitingMove, setPromotionWaitingMove] = useState<Move>();
   const [selectedPiece, setSelectedPiece] = useState<BoardPiece>();
+  const [selectedTime, setSelectedTime] = useState<number>();
+
 
   function syncState() {
     setBoard(chess.board());
@@ -60,6 +64,9 @@ export function BoardContextProvider({ children }: { children: ReactNode }) {
   function reset() {
     chess.reset();
     syncState();
+    setSelectedTime(undefined);
+    setSelectedPiece(undefined);
+    setPromotionWaitingMove(undefined);
   }
 
   function makeMove(...args: Parameters<typeof chess.move>) {
@@ -88,6 +95,8 @@ export function BoardContextProvider({ children }: { children: ReactNode }) {
         setPromotionWaitingMove,
         selectedPiece,
         setSelectedPiece,
+        selectedTime,
+        setSelectedTime,
         turn,
         reset,
         makeMove,
