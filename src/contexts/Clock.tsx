@@ -3,7 +3,7 @@ import styles from './Clock.module.css';
 import { useBoard } from './BoardContext';
 
 export function Clock({ timeLimit, color }: { timeLimit: number; color: 'w' | 'b' }) {
-  const { turn } = useBoard();
+  const { turn, setIsTimeout } = useBoard();
 
   // for UI
   const [timeLeft, setTimeLeft] = useState(timeLimit);
@@ -39,6 +39,10 @@ export function Clock({ timeLimit, color }: { timeLimit: number; color: 'w' | 'b
       clearInterval(intervalId);
     };
   }, [timeLimit, isPaused, turn, color, timeLeft]);
+
+  if (timeLeft === 0) {
+    setIsTimeout(true);
+  }
 
   let seconds = timeLeft;
   const hours = Math.floor(seconds / 3600);
