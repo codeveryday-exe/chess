@@ -50,6 +50,7 @@ export function Board() {
               {piece && <Piece piece={piece} onSelectedPiece={() => setSelectedPiece(piece)} />}
               {matchingMove && (
                 <Dot
+                  isCapture={matchingMove !== undefined && matchingMove.isCapture()}
                   onMove={() => {
                     if (matchingMove.isPromotion()) {
                       setPromotionWaitingMove(matchingMove);
