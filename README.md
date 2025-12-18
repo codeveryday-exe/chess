@@ -26,3 +26,4 @@
   // timer doesn't start ticking after white plays its first move
   // create increment logic and add incremented time selectors
   // center endgameAlertBox & promotionPieceSelector
+  // input min at timeLimitSelection does not work properly

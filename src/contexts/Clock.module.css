@@ -17,3 +17,12 @@
   font-weight: bold;
   font-size: 2rem;
 }
+
+.paused {
+  color: grey;
+  opacity: 0.8;
+}
+
+.shortTime {
+  color: red;
+}

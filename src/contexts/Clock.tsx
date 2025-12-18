@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import styles from './Clock.module.css';
 import { useBoard } from './BoardContext';
 import { WHITE } from 'chess.js';
+import clsx from 'clsx';
 
 export function Clock({ timeLimit, color }: { timeLimit: number; color: 'w' | 'b' }) {
   const { turn, isTimeout, setIsTimeout, isCheckmate, isDraw, isStalemate } = useBoard();
@@ -54,7 +55,14 @@ export function Clock({ timeLimit, color }: { timeLimit: number; color: 'w' | 'b
   return (
     <div className={styles.timeBox}>
       <p className={styles.timeSide}>{color === WHITE ? 'White' : 'Black'}</p>
-      <p className={styles.timeText}>{time}</p>
+      <p
+        className={clsx(styles.timeText, {
+          [styles.paused]: isPaused,
+          [styles.shortTime]: hours === 0 && minutes === 0 && seconds <= 10,
+        })}
+      >
+        {time}
+      </p>
     </div>
   );
 }
