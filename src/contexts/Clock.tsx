@@ -5,7 +5,7 @@ import { WHITE } from 'chess.js';
 import clsx from 'clsx';
 
 export function Clock({ timeLimit, color }: { timeLimit: number; color: 'w' | 'b' }) {
-  const { turn, isTimeout, setIsTimeout, isCheckmate, isDraw, isStalemate } = useBoard();
+  const { turn, isTimeout, finishGameByTimeout, isCheckmate, isDraw, isStalemate } = useBoard();
 
   // for UI
   const [timeLeft, setTimeLeft] = useState(timeLimit);
@@ -27,7 +27,7 @@ export function Clock({ timeLimit, color }: { timeLimit: number; color: 'w' | 'b
       setTimeLeft(Math.ceil((msLeft - timeSpent) / 1000)); // for UI
       msLeftRef.current = msLeft - timeSpent; // 29min -> 28min -> 27min |> 26min -> 25min
       if (msLeftRef.current <= 0) {
-        setIsTimeout(true);
+        finishGameByTimeout();
         clearInterval(intervalId);
       }
     }, 0);
@@ -38,7 +38,7 @@ export function Clock({ timeLimit, color }: { timeLimit: number; color: 'w' | 'b
       msLeftRef.current = msLeft - timeSpent;
       clearInterval(intervalId);
     };
-  }, [isPaused, setIsTimeout]);
+  }, [finishGameByTimeout, isPaused]);
 
   let seconds = timeLeft;
   const hours = Math.floor(seconds / 3600);
@@ -58,7 +58,7 @@ export function Clock({ timeLimit, color }: { timeLimit: number; color: 'w' | 'b
       <p
         className={clsx(styles.timeText, {
           [styles.paused]: isPaused,
-          [styles.shortTime]: hours === 0 && minutes === 0 && seconds <= 10,
+          [styles.shortTime]: timeLeft <= 10,
         })}
       >
         {time}

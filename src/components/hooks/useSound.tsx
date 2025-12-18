@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
 type Settings = {
   volume?: number;
@@ -20,7 +20,7 @@ export const useSound = (url: string, settings: Settings | undefined = {}) => {
     audioRef.current.playbackRate = settings.playbackRate || 1;
   }, [settings]);
 
-  const play = () => {
+  const play = useCallback(() => {
     if (typeof window === 'undefined') return;
 
     if (!audioRef.current) {
@@ -35,7 +35,7 @@ export const useSound = (url: string, settings: Settings | undefined = {}) => {
     } catch (error) {
       console.error('Error playing audio:', error);
     }
-  };
+  }, [url]);
 
   return [play];
 };

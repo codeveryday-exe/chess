@@ -12,7 +12,7 @@ export function EndgameAlertBox() {
       : isStalemate
         ? 'Stalemate'
         : isTimeout
-          ? `Times Up, ${turn === 'w' ? 'Black' : 'White'} won!`
+          ? `Times Up, ${turn === WHITE ? 'Black' : 'White'} won!`
           : '';
   return (
     <>

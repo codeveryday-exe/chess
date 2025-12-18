@@ -4,6 +4,7 @@ import type { BoardPiece } from '../types';
 import { useSound } from '../components/hooks/useSound';
 import moveSrc from '../assets/move.mp3';
 import captureSrc from '../assets/capture.mp3';
+import gameOverSrc from '../assets/gameOver.mp3';
 
 interface BoardContextValues {
   board: (BoardPiece | null)[][];
@@ -14,7 +15,7 @@ interface BoardContextValues {
   isDraw: boolean;
   isStalemate: boolean;
   isTimeout: boolean;
-  setIsTimeout: (isTimeout: boolean) => void;
+  finishGameByTimeout: () => void;
   turn: Color;
   reset: () => void;
   promotionWaitingMove: Move | undefined;
@@ -55,6 +56,7 @@ export function BoardContextProvider({ children }: { children: ReactNode }) {
 
   const [moveSound] = useSound(moveSrc);
   const [captureSound] = useSound(captureSrc);
+  const [gameOverSound] = useSound(gameOverSrc);
 
   function syncState() {
     setBoard(chess.board());
@@ -81,8 +83,17 @@ export function BoardContextProvider({ children }: { children: ReactNode }) {
       moveSound();
     }
     chess.move(move);
+    if (chess.isGameOver()) {
+      gameOverSound();
+    }
     syncState();
   }
+
+  const finishGameByTimeout = useCallback(() => {
+    setIsTimeout(true);
+    setSelectedPiece(undefined);
+    gameOverSound();
+  }, [gameOverSound]);
 
   const getMoves = useCallback(
     (square: Square) => {
@@ -100,7 +111,7 @@ export function BoardContextProvider({ children }: { children: ReactNode }) {
         isDraw,
         isStalemate,
         isTimeout,
-        setIsTimeout,
+        finishGameByTimeout,
         promotionWaitingMove,
         setPromotionWaitingMove,
         selectedPiece,

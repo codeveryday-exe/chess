@@ -18,11 +18,11 @@
   font-size: 2rem;
 }
 
+.shortTime {
+  color: red;
+}
+
 .paused {
   color: grey;
   opacity: 0.8;
-}
-
-.shortTime {
-  color: red;
 }

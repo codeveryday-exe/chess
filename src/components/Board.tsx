@@ -5,8 +5,6 @@ import { BLACK, KING, WHITE } from 'chess.js';
 import { Piece } from './Piece';
 import { useMemo } from 'react';
 import { Dot } from './Dot';
-import { useSound } from './hooks/useSound';
-import gameOverSrc from '../assets/gameOver.mp3';
 
 const boardNotation = [
   ['a8', 'b8', 'c8', 'd8', 'e8', 'f8', 'g8', 'h8'],
@@ -29,28 +27,17 @@ export function Board() {
     promotionWaitingMove,
     setPromotionWaitingMove,
     selectedTime,
+    isTimeout,
     getMoves,
     makeMove,
-    isCheckmate,
-    isDraw,
-    isStalemate,
-    isTimeout,
   } = useBoard();
 
   const possibleMoves = useMemo(() => {
     return selectedPiece ? getMoves(selectedPiece.square) : [];
   }, [getMoves, selectedPiece]);
 
-  const isGameOver = isCheckmate || isDraw || isStalemate || isTimeout;
-
-  const [gameOverSound] = useSound(gameOverSrc);
-
-  if (isGameOver) {
-    gameOverSound();
-  }
-
   return (
-    <div className={styles.board} inert={promotionWaitingMove !== undefined || selectedTime === undefined}>
+    <div className={styles.board} inert={promotionWaitingMove !== undefined || selectedTime === undefined || isTimeout}>
       {board.map((row, columnIndex) =>
         row.map((piece, rowIndex) => {
           const matchingMove = possibleMoves.find((move) => move.to === boardNotation[columnIndex][rowIndex]);
@@ -62,7 +49,7 @@ export function Board() {
               squareColor={(rowIndex + (columnIndex % 2)) % 2 === 0 ? WHITE : BLACK}
             >
               {piece && <Piece piece={piece} onSelectedPiece={() => setSelectedPiece(piece)} />}
-              {matchingMove && !isGameOver && (
+              {matchingMove && (
                 <Dot
                   isCapture={matchingMove !== undefined && matchingMove.isCapture()}
                   onMove={() => {
