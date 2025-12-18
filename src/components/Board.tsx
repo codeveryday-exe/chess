@@ -29,11 +29,17 @@ export function Board() {
     selectedTime,
     getMoves,
     makeMove,
+    isCheckmate,
+    isDraw,
+    isStalemate,
+    isTimeout,
   } = useBoard();
 
   const possibleMoves = useMemo(() => {
     return selectedPiece ? getMoves(selectedPiece.square) : [];
   }, [getMoves, selectedPiece]);
+
+  const isGameOver = isCheckmate || isDraw || isStalemate || isTimeout;
 
   return (
     <div className={styles.board} inert={promotionWaitingMove !== undefined || selectedTime === undefined}>
@@ -48,7 +54,7 @@ export function Board() {
               squareColor={(rowIndex + (columnIndex % 2)) % 2 === 0 ? WHITE : BLACK}
             >
               {piece && <Piece piece={piece} onSelectedPiece={() => setSelectedPiece(piece)} />}
-              {matchingMove && (
+              {matchingMove && !isGameOver && (
                 <Dot
                   isCapture={matchingMove !== undefined && matchingMove.isCapture()}
                   onMove={() => {

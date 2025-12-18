@@ -23,3 +23,6 @@
 - [x] Add timer and time-control selector (hold preference in local storage)
 - [x] Add sound effects
 - [] Add multiplayer peer2peer
+  // timer doesn't start ticking after white plays its first move
+  // create increment logic and add incremented time selectors
+  // center endgameAlertBox & promotionPieceSelector
