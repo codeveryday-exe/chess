@@ -5,6 +5,8 @@ import { BLACK, KING, WHITE } from 'chess.js';
 import { Piece } from './Piece';
 import { useMemo } from 'react';
 import { Dot } from './Dot';
+import { useSound } from './hooks/useSound';
+import gameOverSrc from '../assets/gameOver.mp3';
 
 const boardNotation = [
   ['a8', 'b8', 'c8', 'd8', 'e8', 'f8', 'g8', 'h8'],
@@ -40,6 +42,12 @@ export function Board() {
   }, [getMoves, selectedPiece]);
 
   const isGameOver = isCheckmate || isDraw || isStalemate || isTimeout;
+
+  const [gameOverSound] = useSound(gameOverSrc);
+
+  if (isGameOver) {
+    gameOverSound();
+  }
 
   return (
     <div className={styles.board} inert={promotionWaitingMove !== undefined || selectedTime === undefined}>
