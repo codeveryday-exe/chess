@@ -26,7 +26,7 @@ export function Board() {
     setSelectedPiece,
     promotionWaitingMove,
     setPromotionWaitingMove,
-    selectedTime,
+    selectedTimeControl,
     isTimeout,
     getMoves,
     makeMove,
@@ -37,7 +37,10 @@ export function Board() {
   }, [getMoves, selectedPiece]);
 
   return (
-    <div className={styles.board} inert={promotionWaitingMove !== undefined || selectedTime === undefined || isTimeout}>
+    <div
+      className={styles.board}
+      inert={promotionWaitingMove !== undefined || selectedTimeControl === undefined || isTimeout}
+    >
       {board.map((row, columnIndex) =>
         row.map((piece, rowIndex) => {
           const matchingMove = possibleMoves.find((move) => move.to === boardNotation[columnIndex][rowIndex]);

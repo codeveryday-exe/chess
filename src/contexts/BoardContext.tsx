@@ -1,10 +1,13 @@
-import { Chess, Move, type Color, type Square } from 'chess.js';
+import { Chess, Move, WHITE, type Color, type Square } from 'chess.js';
 import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from 'react';
 import type { BoardPiece } from '../types';
 import { useSound } from '../components/hooks/useSound';
 import moveSrc from '../assets/move.mp3';
 import captureSrc from '../assets/capture.mp3';
 import gameOverSrc from '../assets/gameOver.mp3';
+import { useSetClock } from './ClockContext';
+
+type TimeControl = { time: number; increment: number };
 
 interface BoardContextValues {
   board: (BoardPiece | null)[][];
@@ -22,8 +25,8 @@ interface BoardContextValues {
   setPromotionWaitingMove: (move: Move | undefined) => void;
   selectedPiece: BoardPiece | undefined;
   setSelectedPiece: (piece: BoardPiece | undefined) => void;
-  selectedTime: number | undefined;
-  setSelectedTime: (time: number | undefined) => void;
+  selectedTimeControl: TimeControl | undefined;
+  setSelectedTimeControl: (newTimeControl: TimeControl | undefined) => void;
 }
 
 const BoardContext = createContext<BoardContextValues | null>(null);
@@ -52,11 +55,23 @@ export function BoardContextProvider({ children }: { children: ReactNode }) {
   const [turn, setTurn] = useState(() => chess.turn());
   const [promotionWaitingMove, setPromotionWaitingMove] = useState<Move>();
   const [selectedPiece, setSelectedPiece] = useState<BoardPiece>();
-  const [selectedTime, setSelectedTime] = useState<number>();
+  const [selectedTimeControl, _setSelectedTimeControl] = useState<TimeControl>();
 
   const [moveSound] = useSound(moveSrc);
   const [captureSound] = useSound(captureSrc);
   const [gameOverSound] = useSound(gameOverSrc);
+
+  function setSelectedTimeControl(newTimeControl: TimeControl | undefined) {
+    _setSelectedTimeControl(newTimeControl);
+    if (newTimeControl) {
+      setWhiteTimeLeft(newTimeControl.time);
+      setBlackTimeLeft(newTimeControl.time);
+      whiteMsLeftRef.current = newTimeControl.time * 1000;
+      blackMsLeftRef.current = newTimeControl.time * 1000;
+    }
+  }
+
+  const { setWhiteTimeLeft, setBlackTimeLeft, whiteMsLeftRef, blackMsLeftRef } = useSetClock();
 
   function syncState() {
     setBoard(chess.board());
@@ -71,7 +86,7 @@ export function BoardContextProvider({ children }: { children: ReactNode }) {
   function reset() {
     chess.reset();
     syncState();
-    setSelectedTime(undefined);
+    setSelectedTimeControl(undefined);
     setSelectedPiece(undefined);
     setPromotionWaitingMove(undefined);
   }
@@ -87,6 +102,13 @@ export function BoardContextProvider({ children }: { children: ReactNode }) {
       gameOverSound();
     }
     syncState();
+    if (turn === WHITE) {
+      whiteMsLeftRef.current += selectedTimeControl!.increment * 1000;
+      setWhiteTimeLeft(Math.ceil(whiteMsLeftRef.current / 1000));
+    } else {
+      blackMsLeftRef.current += selectedTimeControl!.increment * 1000;
+      setBlackTimeLeft(Math.ceil(blackMsLeftRef.current / 1000));
+    }
   }
 
   const finishGameByTimeout = useCallback(() => {
@@ -116,8 +138,8 @@ export function BoardContextProvider({ children }: { children: ReactNode }) {
         setPromotionWaitingMove,
         selectedPiece,
         setSelectedPiece,
-        selectedTime,
-        setSelectedTime,
+        selectedTimeControl,
+        setSelectedTimeControl,
         turn,
         reset,
         makeMove,

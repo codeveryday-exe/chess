@@ -1,16 +1,18 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect } from 'react';
 import styles from './Clock.module.css';
 import { useBoard } from './BoardContext';
 import { WHITE } from 'chess.js';
 import clsx from 'clsx';
+import { useClock, useSetClock } from './ClockContext';
 
 export function Clock({ timeLimit, color }: { timeLimit: number; color: 'w' | 'b' }) {
   const { turn, isTimeout, finishGameByTimeout, isCheckmate, isDraw, isStalemate } = useBoard();
+  const { whiteTimeLeft, blackTimeLeft } = useClock();
+  const { whiteMsLeftRef, blackMsLeftRef, setWhiteTimeLeft, setBlackTimeLeft } = useSetClock();
 
-  // for UI
-  const [timeLeft, setTimeLeft] = useState(timeLimit);
-  // for logic
-  const msLeftRef = useRef(timeLeft * 1000);
+  const msLeftRef = color === WHITE ? whiteMsLeftRef : blackMsLeftRef;
+  const timeLeft = color === WHITE ? whiteTimeLeft : blackTimeLeft;
+  const setTimeLeft = color === WHITE ? setWhiteTimeLeft : setBlackTimeLeft;
   const isPaused = turn !== color || isTimeout || isCheckmate || isDraw || isStalemate;
 
   useEffect(() => {
@@ -38,7 +40,7 @@ export function Clock({ timeLimit, color }: { timeLimit: number; color: 'w' | 'b
       msLeftRef.current = msLeft - timeSpent;
       clearInterval(intervalId);
     };
-  }, [finishGameByTimeout, isPaused]);
+  }, [finishGameByTimeout, isPaused, msLeftRef, setTimeLeft]);
 
   let seconds = timeLeft;
   const hours = Math.floor(seconds / 3600);

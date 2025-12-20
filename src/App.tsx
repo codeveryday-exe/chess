@@ -8,15 +8,15 @@ import { TimeLimitSelectionBox } from './components/TimeLimitSelectionBox';
 import { BLACK, WHITE } from 'chess.js';
 
 export default function App() {
-  const { promotionWaitingMove, selectedTime } = useBoard();
+  const { promotionWaitingMove, selectedTimeControl } = useBoard();
 
   return (
     <main className={styles.app}>
-      {!selectedTime && <TimeLimitSelectionBox />}
-      {selectedTime && (
+      {!selectedTimeControl && <TimeLimitSelectionBox />}
+      {selectedTimeControl && (
         <div className={styles.clockBox}>
-          <Clock timeLimit={selectedTime} color={WHITE} />
-          <Clock timeLimit={selectedTime} color={BLACK} />
+          <Clock timeLimit={selectedTimeControl.time} color={WHITE} />
+          <Clock timeLimit={selectedTimeControl.time} color={BLACK} />
         </div>
       )}
       <Board />
