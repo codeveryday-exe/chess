@@ -54,7 +54,10 @@ export function TimeLimitSelectionBox() {
                 event.preventDefault();
                 const form = event.currentTarget;
                 const formData = new FormData(form);
-                setSelectedTimeControl({ time: Number(formData.get('minutes')) * 60, increment: 0 });
+                setSelectedTimeControl({
+                  time: Number(formData.get('minutes')) * 60,
+                  increment: Number(formData.get('increment')),
+                });
               }}
               className={styles.customTimeBox}
             >
@@ -64,7 +67,15 @@ export function TimeLimitSelectionBox() {
                 type="number"
                 min={0.1}
                 step={0.01}
-                placeholder="Enter as minutes"
+                placeholder="Minutes per side"
+                required
+              />
+              <input
+                className={styles.input}
+                name="increment"
+                type="number"
+                min={0}
+                placeholder="Increment in seconds"
                 required
               />
               <button className={styles.customTimeBtn} type="submit">
