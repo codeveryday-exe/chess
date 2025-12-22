@@ -28,3 +28,17 @@
   opacity: 0.2;
   border-radius: 100%;
 }
+
+@media (max-width: 460px) {
+  .dot::after {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+@media (max-width: 320px) {
+  .dot::after {
+    width: 15px;
+    height: 15px;
+  }
+}

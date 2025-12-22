@@ -24,9 +24,3 @@
 - [x] Add sound effects
 - [] Add multiplayer peer2peer
   // center EndgameAlertBox & PromotionPieceSelector
-  // use grid in TimeLimitSelectionBox while adding incremented time selectors(?)
-
-/_ display: grid;
-grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-gap: 20px;
-_/

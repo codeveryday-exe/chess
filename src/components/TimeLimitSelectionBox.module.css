@@ -3,7 +3,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  max-width: 500px;
+  max-width: 700px;
   gap: 16px;
   background-color: #22201b;
   border-radius: 10px;
@@ -17,19 +17,15 @@
 }
 
 .timeSelectionBox {
-  display: flex;
-  justify-content: space-evenly;
-  gap: 16px;
-  align-items: center;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(70px, 216px));
+  grid-template-rows: repeat(4, 110px);
+  gap: 10px;
 }
 
 .timeSelectionBtn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  max-width: 124px;
+  text-align: center;
+  max-width: 216px;
   padding: 8px 16px;
   border-radius: 5px;
   background-color: #161512;
@@ -39,6 +35,8 @@
   }
 
   p {
+    display: block;
+    width: 100%;
     font-size: 1.6rem;
     color: #b9b9b9;
   }
@@ -69,3 +67,30 @@
     background-color: #0e0c0b;
   }
 }
+
+@media (max-width: 475px) {
+  .infoText {
+    font-size: 1.6rem;
+  }
+
+  .timeSelectionBtn {
+    p {
+      font-size: 1.2rem;
+    }
+  }
+}
+
+@media (max-width: 393px) {
+  .timeSelectionBtn {
+    p {
+      font-size: 1rem;
+    }
+  }
+}
+
+/* @media (max-width: 300px) {
+  .infoText {
+    font-size: 1.4rem;
+  }
+}
+ */
