@@ -5,7 +5,6 @@
   align-items: center;
   max-width: 700px;
   gap: 16px;
-  background-color: #22201b;
   border-radius: 10px;
   margin: 10px auto;
   padding: 16px 24px;
@@ -28,10 +27,15 @@
   max-width: 216px;
   padding: 8px 16px;
   border-radius: 5px;
-  background-color: #161512;
+  background-color: #22201b;
+  transition: background-color 0.2s;
 
   &:hover {
-    background-color: #0e0c0b;
+    background-color: #2e2b24;
+  }
+
+  &:active {
+    background-color: #413d33;
   }
 
   p {
@@ -52,16 +56,17 @@
 
 .input {
   padding: 3px 5px;
-  background-color: black;
+  background-color: #22201b;
   color: white;
-  border: 1px solid black;
+  border: 1px solid#22201b;
   border-radius: 3px;
 }
 
 .customTimeBtn {
   padding: 5px 8px;
   border-radius: 5px;
-  background-color: #161512;
+  color: #b9b9b9;
+  background-color: #22201b;
 
   &:hover {
     background-color: #0e0c0b;
