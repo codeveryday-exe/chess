@@ -1,23 +1,40 @@
-.box {
+.outerBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.6);
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  animation: fadeIn 0.2s ease;
+}
+
+.innerBox {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   gap: 16px;
   max-width: 600px;
+  width: 600px;
   background-color: #22201b;
   margin: 0 auto;
-  padding: 40px 100px;
+  padding: 60px 0;
   border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
 }
 
 .text {
   font-weight: bold;
+  font-size: 1.2rem;
 }
 
 .restartBtn {
   background-color: #161512;
-  padding: 5px 8px;
+  padding: 8px 16px;
   border-radius: 5px;
 
   &:hover {
@@ -26,5 +43,17 @@
 
   &:active {
     background-color: #000000;
+  }
+}
+
+@media (max-width: 450px) {
+  .text {
+    font-size: 1rem;
+  }
+  .innerBox {
+    padding: 30px 0;
+  }
+  .restartBtn {
+    padding: 5px 8px;
   }
 }
