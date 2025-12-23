@@ -24,3 +24,4 @@
 - [x] Add sound effects
 - [] Add multiplayer peer2peer
   // center EndgameAlertBox & PromotionPieceSelector
+  // bug: stop timer when promoting(?)

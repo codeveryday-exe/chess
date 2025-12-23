@@ -17,8 +17,8 @@ export function PromotionPieceSelector({ promotionWaitingMove }: { promotionWait
   }
 
   return (
-    <>
-      <div className={styles.box}>
+    <div className={styles.outerBox}>
+      <div className={styles.innerBox}>
         <button className={styles.pieceBtn} type="button" onClick={() => promote(QUEEN)}>
           <Queen side={turn === 'w' ? 'white' : 'black'} />
         </button>
@@ -32,6 +32,6 @@ export function PromotionPieceSelector({ promotionWaitingMove }: { promotionWait
           <Knight side={turn === 'w' ? 'white' : 'black'} />
         </button>
       </div>
-    </>
+    </div>
   );
 }
