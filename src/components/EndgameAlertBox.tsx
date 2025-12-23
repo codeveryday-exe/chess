@@ -17,11 +17,13 @@ export function EndgameAlertBox() {
   return (
     <>
       {message && (
-        <div className={styles.box}>
-          <p className={styles.text}>{message}</p>
-          <button onClick={reset} type="button" className={styles.restartBtn}>
-            Play Again
-          </button>
+        <div className={styles.outerBox}>
+          <div className={styles.innerBox}>
+            <p className={styles.text}>{message}</p>
+            <button onClick={reset} type="button" className={styles.restartBtn}>
+              Play Again
+            </button>
+          </div>
         </div>
       )}
     </>
