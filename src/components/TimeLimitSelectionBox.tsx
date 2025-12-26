@@ -75,6 +75,7 @@ export function TimeLimitSelectionBox() {
                 name="increment"
                 type="number"
                 min={0}
+                step={1}
                 placeholder="Increment in seconds"
                 required
               />
