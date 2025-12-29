@@ -9,8 +9,8 @@
   &::after {
     content: '';
     display: block;
-    width: 30px;
-    height: 30px;
+    width: 40%;
+    height: 40%;
     opacity: 0.2;
     background-color: #000000;
     border-radius: 100%;
@@ -27,18 +27,4 @@
   background-color: #000000;
   opacity: 0.2;
   border-radius: 100%;
-}
-
-@media (max-width: 460px) {
-  .dot::after {
-    width: 20px;
-    height: 20px;
-  }
-}
-
-@media (max-width: 320px) {
-  .dot::after {
-    width: 15px;
-    height: 15px;
-  }
 }
