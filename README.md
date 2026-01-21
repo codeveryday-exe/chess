@@ -24,5 +24,4 @@
 - [x] Add sound effects
 - [x] Add multiplayer peer2peer
 
-moves can only be played their own turns
 board orientation (optional)

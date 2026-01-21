@@ -30,6 +30,7 @@ export function Board() {
     isTimeout,
     getMoves,
     makeMove,
+    playerColor,
   } = useBoard();
 
   const possibleMoves = useMemo(() => {
@@ -39,7 +40,9 @@ export function Board() {
   return (
     <div
       className={styles.board}
-      inert={promotionWaitingMove !== undefined || selectedTimeControl === undefined || isTimeout}
+      inert={
+        promotionWaitingMove !== undefined || selectedTimeControl === undefined || isTimeout || turn !== playerColor
+      }
     >
       {board.map((row, columnIndex) =>
         row.map((piece, rowIndex) => {
