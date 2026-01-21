@@ -50,6 +50,7 @@ interface BoardContextValues {
   setSelectedPiece: (piece: BoardPiece | undefined) => void;
   selectedTimeControl: TimeControl | undefined;
   setSelectedTimeControl: (newTimeControl: TimeControl | undefined) => void;
+  playerColor: Color;
 }
 
 const BoardContext = createContext<BoardContextValues | null>(null);
@@ -241,6 +242,7 @@ export function BoardContextProvider({ children }: { children: ReactNode }) {
         setSelectedPiece,
         selectedTimeControl,
         setSelectedTimeControl,
+        playerColor,
         turn,
         reset,
         makeMove,

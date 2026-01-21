@@ -25,5 +25,4 @@
 - [x] Add multiplayer peer2peer
 
 moves can only be played their own turns
-different styles for own clock
 board orientation (optional)
