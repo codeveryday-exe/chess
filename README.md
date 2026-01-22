@@ -22,5 +22,4 @@
 
 - [x] Add timer and time-control selector (hold preference in local storage)
 - [x] Add sound effects
-- [] Add multiplayer peer2peer
-  // bug: stop timer when promoting(?)
+- [x] Add multiplayer peer2peer

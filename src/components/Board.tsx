@@ -6,7 +6,7 @@ import { Piece } from './Piece';
 import { useMemo } from 'react';
 import { Dot } from './Dot';
 
-const boardNotation = [
+const boardNotationWhite = [
   ['a8', 'b8', 'c8', 'd8', 'e8', 'f8', 'g8', 'h8'],
   ['a7', 'b7', 'c7', 'd7', 'e7', 'f7', 'g7', 'h7'],
   ['a6', 'b6', 'c6', 'd6', 'e6', 'f6', 'g6', 'h6'],
@@ -16,6 +16,8 @@ const boardNotation = [
   ['a2', 'b2', 'c2', 'd2', 'e2', 'f2', 'g2', 'h2'],
   ['a1', 'b1', 'c1', 'd1', 'e1', 'f1', 'g1', 'h1'],
 ];
+
+const boardNotationBlack = boardNotationWhite.toReversed().map((row) => row.toReversed());
 
 export function Board() {
   const {
@@ -30,7 +32,11 @@ export function Board() {
     isTimeout,
     getMoves,
     makeMove,
+    playerColor,
   } = useBoard();
+
+  const boardNotation = playerColor === WHITE ? boardNotationWhite : boardNotationBlack;
+  const boardMap = playerColor === WHITE ? board : board.toReversed().map((row) => row.toReversed());
 
   const possibleMoves = useMemo(() => {
     return selectedPiece ? getMoves(selectedPiece.square) : [];
@@ -39,9 +45,11 @@ export function Board() {
   return (
     <div
       className={styles.board}
-      inert={promotionWaitingMove !== undefined || selectedTimeControl === undefined || isTimeout}
+      inert={
+        promotionWaitingMove !== undefined || selectedTimeControl === undefined || isTimeout || turn !== playerColor
+      }
     >
-      {board.map((row, columnIndex) =>
+      {boardMap.map((row, columnIndex) =>
         row.map((piece, rowIndex) => {
           const matchingMove = possibleMoves.find((move) => move.to === boardNotation[columnIndex][rowIndex]);
 
