@@ -15,7 +15,7 @@ export default function App() {
       {!selectedTimeControl && <TimeLimitSelectionBox />}
       {selectedTimeControl && (
         <div className={styles.clockBox}>
-          <Clock timeLimit={selectedTimeControl.time} color={playerColor === WHITE ? WHITE : BLACK} />
+          <Clock timeLimit={selectedTimeControl.time} color={playerColor} />
           <Clock timeLimit={selectedTimeControl.time} color={playerColor === WHITE ? BLACK : WHITE} />
         </div>
       )}
