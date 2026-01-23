@@ -1,11 +1,11 @@
 import { BISHOP, KING, KNIGHT, PAWN, QUEEN, ROOK, WHITE } from 'chess.js';
-import { Bishop } from './Pieces/Bishop';
-import { King } from './Pieces/King';
-import { Knight } from './Pieces/Knight';
-import { Pawn } from './Pieces/Pawn';
-import { Queen } from './Pieces/Queen';
-import { Rook } from './Pieces/Rook';
-import type { BoardPiece } from '../types';
+import { Bishop } from '../Pieces/Bishop';
+import { King } from '../Pieces/King';
+import { Knight } from '../Pieces/Knight';
+import { Pawn } from '../Pieces/Pawn';
+import { Queen } from '../Pieces/Queen';
+import { Rook } from '../Pieces/Rook';
+import type { BoardPiece } from '../../types';
 
 interface Props {
   piece: BoardPiece;

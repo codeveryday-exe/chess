@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import styles from './Clock.module.css';
-import { useBoard } from './BoardContext';
+import { useBoard } from '../../contexts/BoardContext';
 import { WHITE } from 'chess.js';
 import clsx from 'clsx';
-import { useClock, useSetClock } from './ClockContext';
+import { useClock, useSetClock } from '../../contexts/ClockContext';
 
 export function Clock({ timeLimit, color }: { timeLimit: number; color: 'w' | 'b' }) {
   const { turn, isTimeout, finishGameByTimeout, isCheckmate, isDraw, isStalemate } = useBoard();

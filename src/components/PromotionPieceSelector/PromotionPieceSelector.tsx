@@ -1,15 +1,16 @@
 import { BISHOP, KNIGHT, Move, QUEEN, ROOK, type PieceSymbol } from 'chess.js';
-import { useBoard } from '../contexts/BoardContext';
-import { Queen } from './Pieces/Queen';
-import { Rook } from './Pieces/Rook';
-import { Bishop } from './Pieces/Bishop';
-import { Knight } from './Pieces/Knight';
+import { useBoard } from '../../contexts/BoardContext';
+import { Queen } from '../Pieces/Queen';
+import { Rook } from '../Pieces/Rook';
+import { Bishop } from '../Pieces/Bishop';
+import { Knight } from '../Pieces/Knight';
 import styles from './PromotionPieceSelector.module.css';
 
 export function PromotionPieceSelector({ promotionWaitingMove }: { promotionWaitingMove: Move }) {
   const { setPromotionWaitingMove, setSelectedPiece, turn, makeMove } = useBoard();
 
   function promote(promotion: PieceSymbol) {
+    // eslint-disable-next-line react-hooks/immutability
     promotionWaitingMove.promotion = promotion;
     makeMove(promotionWaitingMove);
     setSelectedPiece(undefined);

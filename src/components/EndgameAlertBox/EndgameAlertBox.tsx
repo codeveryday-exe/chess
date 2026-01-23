@@ -1,5 +1,5 @@
 import { WHITE } from 'chess.js';
-import { useBoard } from '../contexts/BoardContext';
+import { useBoard } from '../../contexts/BoardContext';
 import styles from './EndgameAlertBox.module.css';
 
 export function EndgameAlertBox() {

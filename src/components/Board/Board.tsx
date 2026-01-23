@@ -1,10 +1,10 @@
-import { Square } from './Square';
+import { Square } from '../Square/Square';
 import styles from './Board.module.css';
-import { useBoard } from '../contexts/BoardContext';
+import { useBoard } from '../../contexts/BoardContext';
 import { BLACK, KING, WHITE } from 'chess.js';
-import { Piece } from './Piece';
+import { Piece } from '../Piece/Piece';
 import { useMemo } from 'react';
-import { Dot } from './Dot';
+import { Dot } from '../Dot/Dot';
 
 const boardNotationWhite = [
   ['a8', 'b8', 'c8', 'd8', 'e8', 'f8', 'g8', 'h8'],

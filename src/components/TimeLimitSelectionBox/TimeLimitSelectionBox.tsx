@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useBoard } from '../contexts/BoardContext';
+import { useBoard } from '../../contexts/BoardContext';
 import styles from './TimeLimitSelectionBox.module.css';
 
 export function TimeLimitSelectionBox() {
