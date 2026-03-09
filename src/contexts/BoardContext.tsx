@@ -52,6 +52,7 @@ interface BoardContextValues {
   setSelectedTimeControl: (newTimeControl: TimeControl | undefined) => void;
   playerColor: Color;
   URLShare: string | undefined;
+  lastPlayedSquares: { from: string; to: string } | undefined;
 }
 
 const BoardContext = createContext<BoardContextValues | null>(null);
@@ -83,6 +84,7 @@ export function BoardContextProvider({ children }: { children: ReactNode }) {
   const [selectedTimeControl, _setSelectedTimeControl] = useState<TimeControl>();
   const [playerColor, setPlayerColor] = useState<Color>(WHITE);
   const [URLShare, setURLShare] = useState<string>();
+  const [lastPlayedSquares, setLastMovedSquares] = useState<{ from: string; to: string }>();
 
   const [moveSound] = useSound(moveSrc);
   const [captureSound] = useSound(captureSrc);
@@ -145,7 +147,9 @@ export function BoardContextProvider({ children }: { children: ReactNode }) {
     if (chess.isGameOver()) {
       gameOverSound();
     }
+    setLastMovedSquares({ from: move.from, to: move.to });
     syncState();
+
     console.log({ selectedTimeControl });
 
     if (turn === WHITE) {
@@ -246,6 +250,7 @@ export function BoardContextProvider({ children }: { children: ReactNode }) {
         setSelectedTimeControl,
         playerColor,
         URLShare,
+        lastPlayedSquares,
         turn,
         reset,
         makeMove,

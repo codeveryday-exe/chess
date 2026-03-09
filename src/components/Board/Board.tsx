@@ -3,7 +3,7 @@ import styles from './Board.module.css';
 import { useBoard } from '../../contexts/BoardContext';
 import { BLACK, KING, WHITE } from 'chess.js';
 import { Piece } from '../Piece/Piece';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { Dot } from '../Dot/Dot';
 
 const boardNotationWhite = [
@@ -30,6 +30,7 @@ export function Board() {
     setPromotionWaitingMove,
     selectedTimeControl,
     isTimeout,
+    lastPlayedSquares,
     getMoves,
     makeMove,
     playerColor,
@@ -37,6 +38,11 @@ export function Board() {
 
   const boardNotation = playerColor === WHITE ? boardNotationWhite : boardNotationBlack;
   const boardMap = playerColor === WHITE ? board : board.toReversed().map((row) => row.toReversed());
+
+  useEffect(() => {
+    console.log(boardMap);
+    console.log('lastMove', lastPlayedSquares);
+  }, [boardMap, lastPlayedSquares]);
 
   const possibleMoves = useMemo(() => {
     return selectedPiece ? getMoves(selectedPiece.square) : [];
@@ -49,15 +55,17 @@ export function Board() {
         promotionWaitingMove !== undefined || selectedTimeControl === undefined || isTimeout || turn !== playerColor
       }
     >
-      {boardMap.map((row, columnIndex) =>
-        row.map((piece, rowIndex) => {
-          const matchingMove = possibleMoves.find((move) => move.to === boardNotation[columnIndex][rowIndex]);
+      {boardMap.map((row, rowIndex) =>
+        row.map((piece, columnIndex) => {
+          const square = boardNotation[rowIndex][columnIndex];
+          const matchingMove = possibleMoves.find((move) => move.to === square);
 
           return (
             <Square
-              key={rowIndex}
+              key={columnIndex}
               isCheck={inCheck && piece?.type === KING && piece.color === turn}
-              squareColor={(rowIndex + (columnIndex % 2)) % 2 === 0 ? WHITE : BLACK}
+              isLastMovedSquare={square === lastPlayedSquares?.from || square === lastPlayedSquares?.to}
+              squareColor={(columnIndex + (rowIndex % 2)) % 2 === 0 ? WHITE : BLACK}
             >
               {piece && <Piece piece={piece} onSelectedPiece={() => setSelectedPiece(piece)} />}
               {matchingMove && (

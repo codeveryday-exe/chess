@@ -7,15 +7,17 @@ interface Props {
   squareColor: Color;
   children: ReactNode;
   isCheck: boolean;
+  isLastMovedSquare: boolean;
 }
 
-export function Square({ squareColor, isCheck, children }: Props) {
+export function Square({ squareColor, isCheck, children, isLastMovedSquare }: Props) {
   return (
     <div
       className={clsx(styles.square, {
         [styles.white]: squareColor === WHITE,
         [styles.black]: squareColor === BLACK,
         [styles.check]: isCheck,
+        [styles.last_move]: isLastMovedSquare,
       })}
     >
       {children}

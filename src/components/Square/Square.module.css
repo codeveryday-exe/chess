@@ -32,3 +32,8 @@
   background-color: #cd4242;
   border: 1px solid #cd4242;
 }
+
+.last_move {
+  background-color: #ddde63;
+  border: #ddde63;
+}
