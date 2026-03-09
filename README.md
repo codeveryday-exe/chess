@@ -23,3 +23,5 @@
 - [x] Add timer and time-control selector (hold preference in local storage)
 - [x] Add sound effects
 - [x] Add multiplayer peer2peer
+- [x] Print link to the page
+- [x] Add last move square special style
