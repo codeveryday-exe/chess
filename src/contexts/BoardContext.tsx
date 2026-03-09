@@ -51,6 +51,7 @@ interface BoardContextValues {
   selectedTimeControl: TimeControl | undefined;
   setSelectedTimeControl: (newTimeControl: TimeControl | undefined) => void;
   playerColor: Color;
+  URLShare: string | undefined;
 }
 
 const BoardContext = createContext<BoardContextValues | null>(null);
@@ -81,6 +82,7 @@ export function BoardContextProvider({ children }: { children: ReactNode }) {
   const [selectedPiece, setSelectedPiece] = useState<BoardPiece>();
   const [selectedTimeControl, _setSelectedTimeControl] = useState<TimeControl>();
   const [playerColor, setPlayerColor] = useState<Color>(WHITE);
+  const [URLShare, setURLShare] = useState<string>();
 
   const [moveSound] = useSound(moveSrc);
   const [captureSound] = useSound(captureSrc);
@@ -208,7 +210,7 @@ export function BoardContextProvider({ children }: { children: ReactNode }) {
     } else {
       // creating game
       params.append('opponent', id);
-      console.log(`${window.location.origin}?${params}`);
+      setURLShare(`${window.location.origin}?${params}`);
       peerRef.current!.on('connection', (conn) => {
         connectionRef.current = conn;
         connectionRef.current.on('data', onData);
@@ -243,6 +245,7 @@ export function BoardContextProvider({ children }: { children: ReactNode }) {
         selectedTimeControl,
         setSelectedTimeControl,
         playerColor,
+        URLShare,
         turn,
         reset,
         makeMove,

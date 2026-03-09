@@ -6,12 +6,14 @@ import styles from './App.module.css';
 import { Clock } from './components/Clock/Clock';
 import { TimeLimitSelectionBox } from './components/TimeLimitSelectionBox/TimeLimitSelectionBox';
 import { BLACK, WHITE } from 'chess.js';
+import { URLShare } from './components/URLShare/URLShare';
 
 export default function App() {
   const { promotionWaitingMove, selectedTimeControl, playerColor } = useBoard();
 
   return (
     <main className={styles.app}>
+      {!selectedTimeControl && <URLShare />}
       {!selectedTimeControl && <TimeLimitSelectionBox />}
       {selectedTimeControl && (
         <div className={styles.clockBox}>
